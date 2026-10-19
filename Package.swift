@@ -166,6 +166,7 @@ let package = Package(
                 "XKit",
                 "XToolSupport",
                 "PackLib",
+                "ReactNativeSupport",
                 .product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "X509", package: "swift-certificates"),
             ],
@@ -200,6 +201,15 @@ let package = Package(
                 .product(name: "Superutils", package: "xtool-core"),
                 .product(name: "Yams", package: "Yams"),
                 .product(name: "XcodeProjectFormat", package: "xcode-project-format"),
+            ],
+            swiftSettings: swiftSettings,
+        ),
+        .target(
+            name: "ReactNativeSupport",
+            dependencies: [
+                "XUtils",
+                "PackLib",
+                .product(name: "Yams", package: "Yams"),
             ],
             swiftSettings: swiftSettings,
         ),
