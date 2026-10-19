@@ -178,6 +178,7 @@ let package = Package(
                 "SwiftyMobileDevice",
                 "XKit",
                 "PackLib",
+                "ReactNativeSupport",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SystemPackage", package: "swift-system"),
                 .product(name: "NIOPosix", package: "swift-nio"),

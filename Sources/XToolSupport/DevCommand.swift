@@ -1,6 +1,7 @@
 import Foundation
 import ArgumentParser
 import PackLib
+import ReactNativeSupport
 import XKit
 import Dependencies
 import XUtils
@@ -28,6 +29,13 @@ struct PackOperation {
     @discardableResult
     func run() async throws -> URL {
         // TODO: support running inside a child directory
+
+        if let reactNative = try ReactNativeProject(directory: URL(fileURLWithPath: ".")) {
+            let packageDir = try await reactNative.prepare(configuration: buildOptions.configuration)
+            guard FileManager.default.changeCurrentDirectoryPath(packageDir.path) else {
+                throw Console.Error("Could not enter \(packageDir.path)")
+            }
+        }
 
         let contents = try FileManager.default.contentsOfDirectory(atPath: ".")
         guard contents.contains("Package.swift")
@@ -121,7 +129,7 @@ struct DevBuildCommand: AsyncParsableCommand {
         commandName: "build",
         abstract: "Build app with SwiftPM",
         discussion: """
-        This command builds the SwiftPM-based iOS app in the current directory
+        This command builds the SwiftPM-based or React Native iOS app in the current directory
         """
     )
 
@@ -208,7 +216,7 @@ struct DevRunCommand: AsyncParsableCommand {
         commandName: "run",
         abstract: "Build and run app with SwiftPM",
         discussion: """
-        This command deploys the SwiftPM-based iOS app in the current directory
+        This command deploys the SwiftPM-based or React Native iOS app in the current directory
         """
     )
 
