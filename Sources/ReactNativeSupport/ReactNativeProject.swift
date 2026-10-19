@@ -20,9 +20,10 @@ public struct ReactNativeProject: Sendable {
         let dependencies = (manifest.dependencies ?? [:]).merging(manifest.devDependencies ?? [:]) { $1 }
         guard dependencies["react-native"] != nil else { return nil }
 
-        root = directory.absoluteURL.standardizedFileURL
-        isExpo = dependencies["expo"] != nil
-        appName = AppConfig.name(in: directory, isExpo: isExpo) ?? manifest.name ?? "App"
+        let isExpo = dependencies["expo"] != nil
+        self.root = directory.absoluteURL.standardizedFileURL
+        self.isExpo = isExpo
+        self.appName = AppConfig.name(in: directory, isExpo: isExpo) ?? manifest.name ?? "App"
     }
 
     var productName: String {
